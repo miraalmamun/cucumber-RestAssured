@@ -1,0 +1,15 @@
+org\mir\stepDefination\Hooks.class
+org\mir\stepDefination\ReusuableStepDefination.class
+org\mir\deserializationCourse\oAuthTest.class
+org\mir\testing\AddPlaceV3.class
+org\mir\testing\AddBookInLibrary.class
+org\mir\testing\AddPlace.class
+org\mir\testing\AddPlaceV2.class
+org\mir\testing\RandomCh.class
+org\mir\testing\AddPlacePlaceId.class
+org\mir\deserializationCourse\test1.class
+org\mir\serializationPlace\AddPlaceTest.class
+org\mir\testing\MockResponseComplex.class
+org\mir\testing\AddBookThenDelete.class
+org\mir\testing\HoldResponseBodyAndExtractValue.class
+cucumber\Options\TestRunner.class

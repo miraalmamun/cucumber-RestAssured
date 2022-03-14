@@ -1,0 +1,47 @@
+{
+	"url": "miralmamun@gmail.com",
+	"service": "Project Manager",
+	"expertise": "Java",
+	"courses": {
+		"webAutomation": [
+			{
+				"courseTitle": "Java and Selenium",
+				"price": "50"
+			},
+			{
+				"courseTitle": "Cypress",
+				"price": "40"
+			},
+			{
+				"courseTitle": "Protector",
+				"price": "40"
+			}
+		],
+		"api": [
+			{
+				"courseTitle": "Java and restaured",
+				"price": "50"
+			},
+			{
+				"courseTitle": "Java and soapui",
+				"price": "30"
+			},
+			{
+				"courseTitle": "Java and ReadyAPI",
+				"price": "60"
+			}
+		],
+		"mobile": [
+			{
+				"courseTitle": "Java and appium",
+				"price": "50"
+			},
+			{
+				"courseTitle": "Java and c",
+				"price": "30"
+			}
+		]
+	},
+	"instructor": "mir",
+	"LinkedId": "miraal.com"
+}

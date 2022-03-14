@@ -1,0 +1,28 @@
+Serialization and Deserialization of Request/Responses with POJO(Plan object java object) classes.
+
+Serialization: In Rest Assured context is a process of converting a Java object into Request
+body(Payload).
+
+Rest Assured also Supports deserialization by converting Response body back to Java object.
+When you get response back from your rest assured test, we can convert response Json/XML into
+java object(with help of POJO)
+
+Advantages: Easy to parse and extract response(Json/XML) values if they are wrapped as Java
+object.
+
+User friendly Metods can be created which makes code more readable.
+
+
+Design Approach:
+Java object is constructed with the support of POJO classes.
+
+POJO classes are created based on the Request/Response payload.
+
+What Additional Libraries required?
+
+For JSON you need to have either Jackson, Jackson2. Gson or Johnzon in the classpath
+For XML you need JAXB.
+
+
+
+

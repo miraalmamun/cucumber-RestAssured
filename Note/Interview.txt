@@ -1,0 +1,1060 @@
+What are the most commonly used HTTP methods supported by REST?
+2.What is the difference between PUT and POST methods?
+3.What are commonly used HTTP Methods 
+1. What all challenges in API Testing?
+4. List out few Authentication Techiques used in API'S
+5. Why API testing is determined as most suitable form for Automation testing?
+7. What exactly needs to verify in API testing?
+8.What are Path Parameters and Query Parameters for below API
+9. What are the core components of an HTTP request
+10. What could be the HTTP Method for below API Scenario? Answer if it is GET or POST
+11.What are the differences between API testing and UI testing
+12.What protocol is used by the RESTFUL Web Services
+13. What are Soap Wbservices
+14.How do we Represent A Resource in REST
+15. Can you use GET request instead of PUT to create a resource
+16.Can you use POST request instead of PUT to create a resource
+17. What do you understand by Payload in Restful Webservice
+18.How do we differentiate Path and Query Parameters in API Request Endpoint
+19. What is Rest Assured
+20. How would we define API details in Rest Assured Automation?
+21. What is JSON Serialization and Deserialization in Rest Assured
+22.List out few common JSON Parsing Techniques used in Rest Assured Automation
+23. How would you send attachments to API using Rest Assured Test?
+24. Different Status codes and their descriptions
+
+
+
+
+
+2.What is the difference between PUT and POST methods?
+.Create a new object on the server
+.Update an existing object with new values
+
+3.What are commonly used HTTP Methods 
+
+CONNECT, DELETE, GET, HEAD, OPTIONS, PATCH, POST, PUT
+HTTP GET
+Use GET requests to retrieve resource representation/information only. GET APIs should be idempotent.
+For any given HTTP GET API, if the resource is found on the server, then it must return HTTP response code 200 (OK) – along 
+with the response body. In case resource is NOT found on server then it must return HTTP response code 404 (NOT FOUND). Similarly,
+if it is determined that GET request itself is not correctly formed then server will return HTTP response code 400 (BAD REQUEST).
+
+HTTP HEAD
+The HEAD method asks for a response identical to that of a GET request, but without the response body.
+
+HTTP POST
+Use POST APIs to create new subordinate resources, e.g., a file is subordinate to a directory containing it or a row is subordinate
+to a database table. When talking strictly in terms of REST, POST methods are used to create a new resource into the collection of 
+resources.
+
+Ideally, if a resource has been created on the origin server, the response SHOULD be HTTP response code 201 (Created) and contain 
+an entity which describes the status of the request and refers to the new resource, and a Location header.
+
+Many times, the action performed by the POST method might not result in a resource that can be identified by a URI. In this case, 
+either HTTP response code 200 (OK) or 204 (No Content-->The server successfully processed the request, and is not returning any content.) 
+is the appropriate response status.
+
+Status 204 (No Content) indicates that the server has successfully fulfilled the request and that there is no content to send in
+the response payload body
+
+Responses to this method are not cacheable, unless the response includes appropriate Cache-Control or Expires header fields.
+
+HTTP DELETE
+As the name applies, DELETE APIs are used to delete resources (identified by the Request-URI).
+
+A successful response of DELETE requests SHOULD be HTTP response code 200 (OK) if the response includes an entity describing 
+the status, 202 (Accepted) if the action has been queued, or 204 (No Content) if the action has been performed but the response
+does not include an entity.
+
+The request has been accepted for processing, but the processing has not been completed. The request might or might not
+eventually be acted upon, as it might be disallowed when processing actually takes place
+
+DELETE operations are idempotent. If you DELETE a resource, it’s removed from the collection of resources. Repeatedly calling
+DELETE API on that resource will not change the outcome – however, calling DELETE on a resource a second time will return 
+a 404 (NOT FOUND) since it was already removed.
+
+HTTP PUT
+Use PUT APIs primarily to update existing resource (if the resource does not exist, then API may decide to create a new resource or not). 
+If a new resource has been created by the PUT API, the origin server MUST inform the user agent via the HTTP response code 201 (Created) 
+response and if an existing resource is modified, either the 200 (OK) or 204 (No Content) response codes SHOULD be sent to indicate 
+successful completion of the request.
+
+HTTP PATCH
+HTTP PATCH requests are to make partial update on a resource. If you see PUT requests also modify a resource entity, so to make more clear – 
+PATCH method is the correct choice for partially updating an existing resource, and PUT should only be used if you’re replacing a resource 
+in its entirety. 405 (Method not allowed), unless you want to modify the collection itself. 200 (OK) or 204 (No Content). Use 404 (Not Found),
+if ID not found or invalid.
+
+HTTP OPTIONS method requests permitted communication options for a given URL or server. A client can specify a URL with this method, 
+or an asterisk (*) to refer to the entire server.
+
+SYNTAX
+OPTIONS /index.html HTTP/1.1
+OPTIONS * HTTP/1.1
+
+The response then contains an Allow header that holds the allowed methods:
+
+HTTP/1.1 204 No Content
+Allow: OPTIONS, GET, HEAD, POST
+Cache-Control: max-age=604800
+Date: Thu, 13 Oct 2016 11:45:00 GMT
+Server: EOS (lax004/2813)
+
+
+The HTTP CONNECT method starts two-way communications with the requested resource. It can be used to open a tunnel.
+
+For example, the CONNECT method can be used to access websites that use SSL (HTTPS). The client asks an HTTP Proxy server 
+to tunnel the TCP connection to the desired destination. The server then proceeds to make the connection on behalf of the client. 
+Once the connection has been established by the server, the Proxy server continues to proxy the TCP stream to and from the client.
+
+Example
+Some proxy servers might need authority to create a tunnel. See also the Proxy-Authorization header.
+
+CONNECT server.example.com:80 HTTP/1.1
+Host: server.example.com:80
+Proxy-Authorization: basic aGVsbG86d29ybGQ=
+
+1. What all challenges in API Testing?
+.API Documentation
+.Access to DB
+.Authorization OverHead
+
+Below you’ll find the following six common challenges when testing APIs and our recommended solutions.
+
+Initial Setup of API Testing
+Manual testing helps confirm whether something works. Automated testing is necessary with APIs to gauge 
+how well they perform under pressure. Getting the testing infrastructure up and running is often one of 
+the most challenging parts of the process, not because it is particularly difficult, but because it can
+be a substantial motivation-killer. Once you manage to motivate your team to get through the process, 
+however, it pays off over the long-term.
+
+Solution: API testing should start in the design phase—how is the API going to be tested? Ensure interval 
+checking of your APIs for 100 percent uptime.
+
+Updating the Schema of API Testing
+The schema—in other words, the data formatting that handles requests and responses for the API—needs to
+be maintained throughout the testing process. Any updates to the program that create additional parameters
+for the API calls need to be reflected in the schema configuration.
+
+Solution: In today’s API economy, having an ever-changing API helps facilitate the demand. However, there 
+can be downtime caused by those changes. One way to avoid that is to thoroughly test the API in beta and 
+alpha environments. The chances of issues decrease to 90 percent when testing in these environments.
+
+Testing Parameter Combinations
+APIs handle communication between systems by assigning data values to parameters and passing those parameters 
+through data requests. It’s necessary to test all possible parameter request combinations in the API to test for
+problems pertaining to specific configurations. A larger project could end up assigning two different values to 
+the same parameter, or create instances where numerical values appear when text values should be. Adding an 
+additional parameter exponentially increases the number of possible combinations.
+
+Solution: We’ve learned from our customers that having release candidates are important. For example, picking one 
+or two applications to utilize the API on and release it to just those applications. Pick applications that aren’t 
+critical to daily operations. This way you’re able to see how the API is being utilized and if there are any 
+configurational changes that need to be made to have a general availability (GA) release.
+
+Sequencing the API Calls
+In many cases, API calls need to appear in a specific order to work correctly. This creates a sequencing challenge 
+for the testing team. For example, if a call to return a user’s profile information goes through before the profile 
+is created, the request will return an error. Alternatively, a call to create a map needs to run prior to placing 
+location pins on the map to work correctly. This process can get increasingly difficult when working with 
+multiple-threaded applications.
+
+Solution: This relates to the point above of having a release candidate to help in managing and seeing what the 
+sequencing of the API calls are. We recommend making a flowchart to visualize the API calls. This will help developers
+build API calls and integrate them faster without causing issues.
+
+Validating Parameters
+Testing teams may find validating the parameters sent through API requests challenging as well. The sheer number of 
+parameters and use cases for those parameters can make it a daunting task. The team needs to make sure all parameter 
+data uses the correct string or numerical data type, fits within length restrictions, fits within a designated value 
+range and passes other validation criteria. For example, U.S. phone numbers should appear in a 10-digit format, and 
+returning a 5-digit zip code should trigger an invalidation error.
+
+Solution: This can be avoided by having continuous synthetic API monitoring to catch the problem early on. Moreover, 
+it should be combined with an APM solution to get an overall 360-degree view. Validating parameters is one of the most
+important things. It should show you how fast you’re serving those parameters. If making those calls has significant 
+impacts on your system, implementing synthetic and APM solutions will ensure you catch the problem early on.
+
+Tracking System Integration
+The final challenge is making sure the API testing system is working correctly with the data tracking system. 
+This is necessary to bring back correct responses on whether a call is working correctly. It’s also used to passively
+monitor API performance. Since this step can come late in the process, the team may be too fatigued to give it the attention it needs.
+
+Solution: Think about your application in the design phase and how it will integrate with other systems. Different applications
+have different requirements that need to be met. Make sure you aren’t causing applications to fail by testing in parallel with 
+critical integration systems. This can be accomplished by implementing and including load testing in your continuous delivery.
+
+API versioning
+
+Versioning is a primary cause of rising complexity in API testing. Most systems have a degree of depreciation, which should
+be managed by an API with the help of versioning. The API must identify missing values and allocate some default to allow 
+the old version to work. Moreover, it can be the case that some versions are called by some versions but not others.
+
+
+25. Rest API - Response Codes and Statuses
+.200-OK -->The request was successfully completed.
+.201-Created-->A new resources was successfully created.
+.400-Bad Request-->The request was invalid.
+.401-Unauthorized--> The request did not include an Authorization 
+token or the authentication token was expired
+.403-Forbidden-->The client did not have permission to access the requested
+resource.
+.404- Not Found--> The requested resource was not found.
+.405-Method Not Allowed--> The HTTP method in the request was not supportd by 
+the resource. For example, the DELETE method cannot bre used to create object.
+.409-Conflict-->
+.500
+.503
+ 
+
+
+
+4. List out few Authentication Techiques used in API'S
+.Session/Cookies Based Authentication
+.Basic Authentication
+.Digest Authentication
+.OAuth
+5. Why API testing is determined as most suitable form for
+Automation testing?
+6. What is rest API?
+.REST stands for Representational State Transfer. It is a set of functions
+helping developers in performing requests and receive responses. Interaction 
+is made through HTTP Protocol in REST API.
+7. What exactly needs to verify in API testing?
+.We will verify the accuracy of the data
+.We will see the HTTP status code
+.We will see the response time
+.Error codes in case API returns any errors
+.Authorization would be check
+.Non-Functional testing such as performance testing security testing
+8.What are Path Parameters and Query Parameters for below API 
+request URL
+--> http://mir.com/orders/1123457?location=USA
+API is lying or Endpoint--> http://mir.com
+Resource--->orders  
+Path Parameters-->1123457 Path Parameters are generally identified by /
+Query Parameters--> location=USA Query Parameters are generally identified by ?
+9. What are the core components of an HTTP request
+.HTTP Request methods like: GET,PUT,POST,DELETE
+.Base Uniform Resource Identifier(URL)
+.Resources and Parameters
+.Request Header,which carries metadata(as key-value pairs) for the HTTP Request message
+.Request Body,which indicates the message content or resource representation
+
+10. What could be the HTTP Method for below API Scenario? Answer if it is GET or POST
+Scenario: An API which has Endpoint,Parameters,Headers,,cookies and Payload
+
+11.What are the differences between API testing and UI testing
+UI(User Interface) testing means the testing of the graphical user interface.
+The focus of UI testing is on the look and feel of the application. In user interface 
+testing the mainfocus is on how users can interact with app elements such as images,
+fonts,layout etc. are checked
+
+API testing allows the communication between two software systems. API testing works 
+on backend also known as backend testing
+
+12.What protocol is used by the RESTFUL Web Services
+RESTFUL Web Services uses the HTTP protocol. They use the HTTP protocol as a medium of
+communication between the client and the server
+
+13. What are Soap Wbservices
+
+14.How do we Represent A Resource in REST
+
+15. Can you use GET request instead of PUT to create a resource
+
+16.Can you use POST request instead of PUT to create a resource
+Yes. We can. Because POST is super set of all other HTTP methods ecept GET
+
+17. What do you understand by Payload in Restful Webservice
+. Payload/Body is the secure input data which is sent to API to process the request.
+Payload is generally represent in JSON FORMET in Rest API's
+
+18. How do we differentiate Path and Query Parameters in API Request Endpoint
+
+19. What is Rest Assured
+.It is Java library which can automate Rest API'S
+
+20. How would we define API details in Rest Assured Automation?
+.- We shall define all the request details and send it to the server GIVEN WHEN THEN Methods
+
+21. What is JSON Serialization and Deserialization in Rest Assured
+. Serialization in Rest Assured context is a process of converting a java Object
+into Request body(PayLoad)
+.Rest Assured also supports deserialization by converting Response body back to Java object
+
+22.List out few common JSON Parsing Techniques used in Rest Assured Automation
+.Json Path
+.Deserialization of Json using POJO Classes
+
+23. How would you send attachments to API using Rest Assured Test?
+.Using MultiPart Method
+
+24. Different Status codes and their descriptions
+
+
+What are the most commonly used HTTP methods supported by REST?
+1.GET is only used to request data from a specified resource. Get requests can be cached and bookmarked.
+It remains in the browser history and haS length restrictions. GET requests should never be used when 
+dealing with sensitive data.
+2.POST is used to send data to a server to create/update a resource. POST requests are never cached 
+and bookmarked and do not remain in the browser history.
+3.PUT replaces all current representations of the target resource with the request payload.
+4.DELETE removes the specified resource.
+5.OPTIONS is used to describe the communication options for the target resource.
+6.HEAD asks for a response identical to that of a GET request,  but without the response body.
+
+
+=============================================================================================================
+
+
+Enlist some common tests that are performed on APIs.
+
+Any data structure updated by API which requires proper validation.
+Input condition-based return values.
+Call to another API or if any other event is triggered or some interruption is raised.
+The return values can also be null or wrong results.
+Modification of some resources like an update of the database, process killing, etc.
+
+
+
+Q3. What is the procedure to perform API testing and what exactly needs to be checked?
+
+Ans: During the API testing process, a request is raised to the API with the known data. 
+This way you can analyze the validation response. Basically, things that must be checked
+during performing API testing are:
+
+
+
+1. Accuracy of data 
+
+
+2. Schema validation
+
+
+3. HTTP status codes
+
+
+4. Data type, validations, order, and completeness 
+
+
+5. Authorization checks 
+
+
+6. Implementation of response timeout
+
+
+7. Error codes in case API returns, and 
+
+
+8. Non-functional testing like performance and security testing
+
+
+
+-----------------------------------------------------------------------------------------------------------------
+
+Contract Tests
+An API represents a contract between 2 or more applications. The contract describes how to interact with 
+the interface, what services are available, and how to invoke them. This contract is important because it
+serves as the basis for the communication. If there’s something wrong with the contract, nothing else really matters.
+
+The first and most basic type of API tests are contract tests, which test the service contract
+itself (Swagger, PACT, WSDL or RAML). This type of test validates that the contract is written correctly 
+and can be consumed by a client. This test works by creating a series of tests that pull in the contract and validate that:
+
+the service contract is written according to specifications
+a message request and response are semantically correct (schema validation)
+the endpoint is valid (HTTP, MQ/JMS Topic/Queue, etc)
+the service contract hasn’t changed
+I think of these as your first “smoke tests.” Should these tests fail, there’s really no reason to continue testing this
+particular service.Should these tests pass, you can move on to start testing the actual functionality of the API.
+
+Component Tests
+Component tests are like unit tests for the API – you want to take the individual methods available in the API and 
+test each one of them in isolation. You create these tests by making a test step for each method or resource that is 
+available in the service contract.
+
+The easiest way to create component tests is to consume the service contract and let it create the clients.
+You can then data-drive each individual test case with positive and negative data to validate that the 
+responses that come back have the following characteristics:
+
+The request payload is well-formed (schema validation)
+The response payload is well-formed (schema validation)
+The response status is as expected (200 OK, SQL result set returned, or even an error if that’s what you’re going for)
+The response error payloads contain the correct error messages
+The response matches the expected baseline. This can take two forms:
+Regression/diff – the response payload looks exactly the same from call to call (a top-down approach 
+where you essentially take a snapshot of the response and verify it every time). This can also be a 
+great catalyst to identify API change (more about that later).
+Assertion – the individual elements in the response match your expectations (this is a more surgical,
+bottom-up approach targeted at a specific value in the response).
+The service responds within an expected timeframe
+These individual API tests are the most important tests that you can build because they will be 
+leveraged in all of the subsequent testing techniques. Why rebuild test cases when you can simply 
+reference these individual API calls in all of the different types of tests going forward? This not 
+only promotes consistency but also simplifies the process of approaching API testing.
+
+Scenario Tests
+Scenario testing tends to be what most people think about when they think about API testing. 
+In this testing technique, you assemble the individual component tests into a sequence, 
+much like the example I described above for the Amazon service.
+
+There are two great techniques for obtaining the sequence:
+
+Review the user story to identify the individual API calls that are being made.
+Exercise the UI and capture the traffic being made to the underlying APIs.
+Scenario tests allow you to understand if defects might be introduced by combining different data points together.
+
+I ran into a very interesting example of this while working with a customer. They had employed a series of services 
+to call a customer’s financial profile, available accounts, credit cards, and recent transactions. Each of these API 
+calls worked individually, but when you put them together in a sequence they started failing. The reason for this 
+turned out to be a simple timestamp, which, when returned from one API call was in a different format than the one 
+expected in a subsequent request. They didn’t catch this when they were doing unit testing or smoke testing because 
+they had asserted that a timestamp was returned without specifying the format. It wasn’t until testing the overall 
+scenario that it became clear that transferring the timestamp from one call to another caused the breakdown.
+
+Another benefit of scenario testing is the ability to validate expected behavior when your APIs are being used 
+in ways that you did not expect. When you release an API, you are providing a series of building blocks to the
+ world. You may have prescribed techniques for combining these blocks together, but customers can have 
+unpredictable desires, and unexpectedly combine APIs together to expose a defect in your application. 
+To safeguard against this, you want to create many scenario tests with different combinations of APIs 
+to bulletproof your application against a critical breakdown.
+
+Since the component tests form the backbone of the scenario tests, an organization usually has a wider 
+number of scenario tests. They are built when a new functionality is introduced to model the customer’s 
+journey for the new feature. By doing this you really can reduce the amount of time spent on testing 
+because you’re only having to build tests for the new functionality and you know that you have a reliable 
+library of underlying tests to catch anything unexpected.
+
+Performance Tests
+Performance testing is usually relegated to the end of the testing process, in a performance-specific
+ test environment. This is because performance testing solutions tend to be expensive, require 
+specialized skill sets, and require specific hardware and environments. This is a big problem because 
+APIs have service level agreements (SLAs) that must be met in order to release an application. 
+If you wait until the very last moment to do your performance testing, failures to meet the SLAs can 
+cause huge release delays.
+
+Doing performance testing earlier in the process allows you to discover performance-related issues before 
+you run your full regression cycle. If you followed the testing process up to this point, this is actually
+ going to be pretty easy because you have all of the underlying test cases you need in order to do performance 
+testing. You can simply take your scenario tests, load them up into your performance testing tool, and run 
+them with a higher number of users. If these tests fail, you can trace the failure back to the individual user
+ story and have a better level of understanding for what will be affected. Managers can then use this 
+understanding to make a go or no go decision about releasing the application.
+
+Security Tests
+Security testing is important to all stakeholders in your organization. If a security vulnerability is 
+exposed and exploited, it can lead to significant reputation loss and financial penalties. Much like a 
+user can accidentally use your APIs in ways you wouldn’t expect, a user can also intentionally try to 
+exploit your APIs. A hacker can get a hold of your API, discover vulnerabilities, and take advantage of them.
+
+To safeguard against this type of behavior, you need to build test cases that attempt to perform these 
+types of malicious attacks. You can leverage your existing test cases to do so, because a scenario test 
+can provide the attack vector into the application. You can then re-use this attack vector to launch your
+ penetration attacks. A good example of this is combining different types of parameter fuzzing or SQL
+ injection attacks with your scenario tests. That way, any changes that propagate through the application
+ will be picked up by your security tests. To learn more about API security testing, check out my colleague’s
+ helpful blog post.
+
+Omni-Channel Tests
+Because of the multiple interfaces that applications interact with (mobile, web, APIs, databases…), 
+you will run into gaps in test coverage if you test any one of these in isolation, missing the 
+subtleties of the complex interactions between these interfaces.
+
+Omni-channel tests comprehensively cover the application’s many interfaces to ensure thorough test 
+coverage, by interweaving API and database tests into the validation of mobile and web UI interactions.
+ This means taking a test that is exercising one of the interfaces and coordinating it with another
+ – executing your UI tests such as Web (Selenium) or Mobile (Appium) and interlacing them with any of
+ your API or database tests, exchanging data points from the system through the test execution. With 
+effective omni-channel testing, you can create stable, reusable test cases that can be easily automated.
+
+Managing Change
+Change is one of the most important indicators of risk to your application. Change can occur in many forms, including:
+
+Protocol message format change for a service
+Elements added or removed from an API
+Underlying code change affecting the data format returned
+Re-architecture of a service to break it down into multiple parts (extremely prevalent as organizations move to microservices)
+As change occurs, you need to have test cases built to identify the change and provide remediation plans.
+ Using a solution that provides analyses to address the impact of these changes will allow you to understand
+ what change has occurred and target the specific tests that are affected.
+
+Change can then be captured in the form of a template, to update any of the underlying component or 
+scenario tests with new functionality. Since the rest of your tests reference these tests, the impact
+ of change will be reduced.
+
+
+--------------------------------------------------------------------------------------------------------------------
+What are the common tests performed on API’s
+What are the common API testing types?
+
+Validation Testing/Unit testing
+Functional Testing
+UI testing
+Load testing
+Runtime/ Error Detection
+Security testing
+Penetration testing
+Fuzz testing
+Interoperability and WS Compliance testing
+
+1. Validation Testing/Unit testing
+
+Validation testing is one of the last steps in the development process, but it is one
+of the more important tests that can be run. Validation testing is typically done 
+at the very end of the basic development process, specifically after verification of
+the API’s constituent parts and functions is completed. Whereas many of the tests 
+we’ll discuss throughout this piece deal with specific facets of the codebase or 
+specific functions, validation testing is a much more high-level consideration
+
+Validation testing is essentially a set of simple questions applied to the entirety of 
+the project. These questions include:
+
+Product: Did we build the correct product? Is the API itself the correct product for 
+the issue that was provided, and did the API experience any significant code bloat 
+or feature creep that took an otherwise lean and focused implementation into an 
+untenable direction?
+Behavior: Is the API accessing the correct data in the correctly defined manner? 
+Is the API accessing too much data, is it storing this data correctly given the 
+confidentiality and integrity requirements of the dataset?
+Efficiency: Is the API the most accurate, optimized, and efficient method of 
+doing what is required? Can any codebase be removed or altered to remove 
+impairments to the general service?
+
+
+2. Functional Testing
+Functional testing is simply a test 
+of specific functions within the codebase. These functions in turn represent 
+specific scenarios to ensure that the API functions within expected parameters,
+and that errors are handled well when the results are outside of the 
+expected parameters.
+
+Functional testing is much easier to explain with a scenario. Let’s assume our 
+API processes music for ordering via an online portal. When a user searches for
+a song, they search by Track Name and Artist Name. Functional testing in this 
+case takes a layered approach, and handles a few specific scenarios.
+
+First, the function of the API is tested with proper inputs – for example, 
+Song 2 by Blur. The API validates the request and serves the expected results. 
+Additional testing is needed, however – our testing thus also includes errata,
+searching Song2, song2, or song lyrics.
+
+Due to the nature of the test, we should expect a few stated responses. 
+We should expect either an error (and thus, the appropriate error codes 
+and handling instructions) or a corrected response that bears the material 
+we’ve requested.
+
+Functional testing should deliver on all of these points – not only should 
+the regular test case be included, but scenarios of both errata and edge cases 
+should be implemented in the testing regimen.
+
+3. UI Testing
+While both validation and functional testing are somewhat generalized 
+in their approaches, UI testing is more specific. UI testing is exactly 
+what it says on the tin – a test of the user interface for your API and 
+its constituent parts. This test is specifically concerned with the
+function of the UI, whether that interface is graphical in nature or 
+depends upon command-line endpoint calls.
+
+This is in many ways less of a test of the API itself, and more a test
+of the interface that ties into the API and the developer experience 
+of using that interface. Though not a direct test of the API in terms 
+of codebase, this gives a very generalized view of the health, usability,
+ and efficiency of both the front-end and the back-end.
+
+In fact, this is why UI testing is often used as a substitute for 
+functional testing – in many ways, this test serves the same function,
+ albeit in a less complete and more general sense. That being said, 
+this is a poor approach in modern testing, and UI testing should be 
+strictly limited to ensuring that the UI itself functions as intended.
+
+It should be mentioned that web UI testing is a subset of this type 
+of test, and is concerned more with the end-to-end integrations 
+between web instances the the APIs they represent. Though web UI 
+testing is indeed a subset that is distinct from other UI testing,
+ it bears mentioning and inclusion in this category.
+
+4. Load Testing
+Load testing is a test obsessed with reality – it purposely eschews
+the theoretical (does this code work in theory?) and errs on the
+practical (will this code work with 1k requests 10k requests, and
+100k requests?). Load testing is thus typically done after the 
+completion of a specific unit or the codebase as a whole, testing
+whether the theoretical solution works as a practical solution 
+under a given load.
+
+Load testing takes on a few different scenarios in order to ensure
+peak performance. The first of these scenarios is called the “baseline“,
+and tests the API against the theoretical regular traffic the API expects 
+in normal, day-to-day usage. This includes regular sized tests peppered with
+ some extremely large requests in an effort to measure any impact between 
+the two request types in practice.
+
+A second load test is typically done with the theoretical maximum traffic.
+This is done to ensure that, even during times of full load, methods are 
+in place to safely throttle requests. While the API may never actually
+reach this theoretical maximum, it is at least good to ensure it can be 
+safely reached with the API reacting in an adequate fashion.
+
+Finally, an overload test is typically done, testing to the theoretical
+maximum and adding 10–20% additional traffic on the top. While this type 
+of testing all but anticipates some sort of failure, it is as much a test 
+of the API function as it is a test of the error code generation and 
+handling built into the API, and as such, almost becomes a hybrid test,
+ concerned with what occurs during high load operation and how any 
+failures are handled during said high load operation.
+
+
+5. Runtime/Error Detection
+This type of test is entirely concerned with the actual running of the API.
+ Whereas most of our other tests are chiefly concerned with the result of
+ implementing the API in an environment or scenario, this test is chiefly 
+concerned with the universal results of utilizing the API codebase. These 
+types of tests generally follow one of a few focuses:
+
+Monitoring: The runtime of the compiled code is tested for various 
+implementation errors, handler failures, and other intrinsic issues 
+with the implementation to ensure there is no insecurity in the 
+codebase through malfunction.
+Execution Errors: The code should respond to valid requests in a 
+predictable, known way, and should fail invalid requests just 
+the same; predictably, and with a known pattern.
+Resource Leaks: Invalid requests, purposefully overflowing commands,
+and other “illegal but common” types of requests are submitted to 
+the API to test for memory, resource, data, or operational leaks
+and insecurities.
+Error Detection: The code is put through known failure scenarios 
+to ensure that errors are properly detected, handled, and routed.
+Note that many of these could arguably be considered part of previous
+ categories; this is because runtime/error detection is a near final 
+review of the known errors and issues generated by previous tests, and 
+is designed to holistically ensure resolutions have been applied successfully.
+
+
+6. Security Testing
+Security testing, penetration testing, and fuzz testing are often launched 
+as three separate components of a greater security auditing process, and for
+this reason, they’ll be discussed jointly. These types of tests are designed
+to ensure that the implementation of the API is secure from external threats.
+
+Security testing, as previously mentioned, encompasses penetration and fuzz 
+testing, but entails additional steps, including validation of encryption 
+methodologies and validating the design of the access control solution for 
+the API. This includes user rights management and validating authorization 
+checks for resource access.
+
+7. Penetration Testing
+Penetration testing takes this a step further, and is generally the second step 
+in the greater auditing process. In this type of test, the API is attacked by 
+someone who has limited working knowledge of the API itself in order to assess 
+the threat vector from an outside perspective. These attacks can be limited to 
+certain functions, resources, or processes, or can target the entirety of the
+ API and its constituent parts.
+
+8. Fuzz Testing
+Finally, fuzz testing is typically a later step in the overall security audit,
+ and is certainly less refined than Penetrating testing or the previous tests
+ mentioned. In Fuzz testing, massive amounts of purely random data, sometimes 
+referred to as “noise” or “fuzz,” is forcibly input into the system in order to
+ attempt a forced crash, overflow, or other negative behavior. This is done to
+ test the API at its absolute limits, and serves somewhat as a “worst case scenario.”
+
+9. Interoperability and WS Compliance Testing
+While this is not necessarily a common series of tests, nor is it one that 
+RESTful API providers will likely come up against, it’s something that should 
+be discussed given the still wide use of SOAP in the enterprise environment. 
+Interoperability and WS Compliance Testing is a type of testing that really 
+only applies to SOAP APIs, and specifically checks for two general fields of 
+function.
+
+First, Interoperability between SOAP APIs is checked by ensuring conformance to
+ the Web Services Interoperability profiles. By conforming to these guidelines 
+and utilizing these tests, interoperability between SOAP APIs can be confirmed 
+and supported. This also has the added benefit of assuring that your APIs are 
+compatible with some relatively large members of the consortium that stated these 
+standards, including IBM, Microsoft, BEA Systems, Oracle, Intel, and more.
+
+Secondly, WS-* compliance is tested to ensure standards such as WS-Addressing, 
+WS-Discovery, WS-Federation, WS-Policy, WS-Security, and WS-Trust are properly 
+implemented and utilized. This is a general step in assuring that your specific 
+SOAP implementation matches the current industry standards, and is secure in its operations.
+
+
+===============================================================================================================
+=============================================================================================================
+https://www.softwaretestinghelp.com/api-testing-interview-questions-and-answers/
+======================================================================================================
+
+Q #1) What is API Testing?
+Q #2) Enlist some common tests that are performed on APIs.
+Q #3) What is the API test environment?
+Q #4) Explain the API testing approach.
+Q #5) Explain in brief the different types of output observed of an API.
+Q #6) Enlist some best practices that are followed to make API testing successful.
+Q #7) What are the tools used for API testing?
+Q #8) What are the tools used for API test automation?
+Q #9) What is the API framework?
+Q #10) Explain API documentation.
+Q #11) Name some most used templates for API documentation.
+Q #12) Enlist some of the API examples which are very well known and popular.
+Q #13) What are the testing methods that come under API testing?
+Q #14) Differentiate API testing and Unit Testing.
+Q #15) What challenges are included under API testing?
+Q #16) What are the types of issues observed while performing API testing?
+Q #17) Why API testing is determined as the most suitable form for Automation testing?
+Q #18) How is UI level testing different from API testing?
+Q #19) What is TestApi?
+Q #20) What do you know about API errors and warnings?
+--------------------------------------------------------------------------------------------------------------------
+https://www.javatpoint.com/api-testing-interview-questions
+-------------------------------------------------------------------------------------------------------------------
+
+2) What is API testing?-->1
+3) What are the types of API testing?
+4) What are the protocols used in API Testing?
+5) What are the tools used for API Testing?
+6) What is API test environment?-->3
+7) What is API framework?
+8) What are the limits of API usage?
+9) What are the advantages of API testing?
+10) What are the principles of an API test design?
+11) What is API framework?
+12) What are the common tests that performed on API?-->2
+13) What exactly needs to verify in API testing?
+14) What are the differences between API and Web Services?
+15) What is API documentation?
+16) What is the most used template for API documentation?
+17) What are the types of bug that can be found during API testing?
+18) What are the difference between API testing and UI testing?
+19) What is SOAP?
+20) What is REST API?
+21) What are the differences between SOAP and REST API?
+22) What are the major challenges faced during API testing?
+23) What are the difference between API Testing and Unit Testing?
+24) What is a RESTFUL web services?
+25) What is Resource in REST?
+26) What is the way to represent the resource in REST?
+27) What protocol is used by the RESTFUL Web Services?
+28) What are the characteristics of REST?
+29) What is messaging in RESTFUL Web Services?
+30) What are the components of an HTTP request?
+31) What is the HTTP protocol supported by REST?
+32) Can we use GET request instead of PUT to create a resource?
+33) What is URI? What is the purpose of web-based service and what is it's format?
+34) What are SOAP Web Services?
+35) When we can use SOAP API?
+
+-------------------------------------------------------------------------------------------------
+https://www.katalon.com/resources-center/blog/web-api-testing-interview-questions/
+---------------------------------------------------------------------------------------
+Definition & Functions of an API (Common Web API Testing interview questions)
+
+1. What is an API?
+2. What are main differences between API and Web Service?
+3. What are the Limits of API Usage?
+4. What are some architectural styles for creating a Web API?
+5. Who can use a Web API?
+6. What is API Testing?
+7. What are the advantages of API Testing?  
+8. Some common protocols used in API testing?
+9. What is the test environment of API?
+10. What are principles of an API test design?
+11. What are the common API testing types?
+12. What is the procedure to perform API testing?
+13. What must be checked when performing API testing?
+14. What is the best approach method to perform API testing?-->4
+15. What are tools could be used for API testing?
+16. What are differences between API Testing and Unit Testing?
+17. What are differences between API Testing and UI Testing?
+18. What are major challenges faced in API testing?
+19. What are the testing methods that come under API testing?
+20. Why is API testing considered as the most suitable form for Automation testing?
+21. What are common API errors that often founded?
+22. What kinds of bugs that API testing would often find?
+
+Documenting the API (Common Web API Testing interview questions)
+
+23. What is API documentation?
+24. What are API documentation templates that are commonly used?
+25. When writing API document, what must be considered?
+26. How often are the APIs changed and, more importantly, deprecated?
+
+REST (Common Web API Testing interview questions)
+
+27. What is REST?
+28. What is a RESTFul Web Services?
+29. What is a “Resource” in REST?
+30. What is the most popular way to represent a resource in REST?
+31. Which protocol is used by RESTful Web services?
+32. What are some key characteristics of REST?
+33. What is messaging in RESTful Web services?
+34. What are the core components of an HTTP request?
+35. What are the most commonly used HTTP methods supported by REST?
+36. Can GET request to be used instead of PUT to create a resource?
+37. Is there any difference between PUT and POST operations?
+38. Which purpose does the OPTIONS method serve for the RESTful Web services?
+39. What is URI? What is the main purpose of REST-based web services and what is its format?
+40. What is payload in RESTFul Web services?
+41. What is the upper limit for a payload to pass in the POST method?
+42. What is the caching mechanism?
+
+SOAP (Common Web API Testing interview questions)
+
+
+43. What are SOAP Web services?
+44. How does SOAP work?
+45. When to use SOAP API?
+46. How users utilize the facilities provided by SOAP?
+47. What is the major obstacle users faced when using SOAP?
+48. What are the various approaches available for developing SOAP based web services?
+49. What are the elements of a SOAP message structure?
+50. What are the syntax rules for a SOAP message?
+51. What is the transport method in SOAP?
+52. What are some important characteristics of a SOAP envelope element?
+53. What are the major functionalities provided by the SOAP protocol class?
+54. What are the web relation functionalities provided by SOAP protocol?
+55. How does the message security model allow the creation of SOAP more secure to use?
+56. What is the difference between top down & bottom up approach in SOAP Web services?
+57. What are advantages of SOAP?
+58. What are disadvantages of SOAP?
+59. What are the differences between SOAP and REST?
+60. SOAP or Rest APIs, which method to use?
+61. What are the factors that help to decide which style of Web services – SOAP or REST – to use?
+
+-------------------------------------------------------------------------------------------------------------------------
+https://www.softwaretestingmaterial.com/api-testing-interview-questions/
+--------------------------------------------------------------------------------------------------------------------
+1. What is an API?
+2. What is API Testing?
+3. What are the common API Testing Types?
+4. Name some of the common protocols used in API Testing?
+5. Difference between API and Web services?
+6. What is Soap?
+7. What is Rest API?
+8. Difference between SOAP and REST?
+9. What are the common tests that are performed on APIs?
+10. What are the advantages of API Testing?
+11. What exactly needs to be verified in API Testing?
+12. Name some tools used for API Testing?
+13. List some most used templates for API documentation?
+14. Name some of the API examples which are quite popular.
+15. Difference between API testing and Unit Testing?
+16. What are the main challenges faced in API testing?
+17. What are the types of bugs we face when performing API testing?
+18. How is UI testing is not similar to API testing?
+19. Name some most commonly used HTTP methods?
+20. Can you use GET request instead of PUT to create a resource?
+21. What is the difference between PUT and POST methods?
+
+----------------------------------------------------------------------------------------------------------------
+https://www.techbeamers.com/rest-api-interview-questions-answers/
+------------------------------------------------------------------------------------------------------------------
+Q-1. Explain REST?
+Q-2. Explain the RESTFul Web Service?
+Q-3. Explain what is a “Resource” in REST?
+Q-4. What is the most popular way to represent a resource in REST?
+Q-5. Which protocol is used by RESTful web services?
+Q-6. What is messaging in RESTful web services?
+Q-7. State the core components of an HTTP Request?
+Q-8. State the core components of an HTTP response?
+Q-9. Name the most commonly used HTTP methods supported by REST?
+Q-10. Mention, whether you can use GET request instead of PUT, to create a resource?
+Q-11. Is there any difference between PUT and POST operations? Explain it.
+Q-12. What purpose does the OPTIONS method serve for the RESTful web services?
+Q-13. What is URI? Explain its purpose in REST-based web services. What is its format?
+Q-14. What do you understand by payload in RESTFul web service?
+Q-15. What is the upper limit for a payload to pass in the POST method?
+Q-16. Explain the caching mechanism?
+Q-17. List the main differences between SOAP and REST?
+Q-18. What are the tools available for testing web services?
+Q-19. Explain the factors that help to decide about the style of web service to use? SOAP or REST?
+Q-20. Can you tell us which Java API helps in developing a RESTFul web service?
+
+----------------------------------------------------------------------------------------------
+https://mindmajix.com/api-testing-interview-questions
+---------------------------------------------------------------------------------------------
+
+Q1. What does API testing mean?
+Q2. What are the names of tests executed on APIs?
+Q3. What is the procedure to perform API testing and what exactly needs to be checked?
+Q4. What is the test environment of API?
+Q5. What approach should be followed for the API testing?-->4
+Q6. Define the basic difference between API testing and UI level testing?
+Q7. Name the common protocols used in API testing.
+Q8. Name different tools used for API testing.
+Q9. What is SOAP?
+Q10. What’s the procedure to test API’s?
+Q11. What is REST API?
+Q12. What are the areas that need to be taken care of while writing API document?
+Q13. What is an API framework?
+Q14. What do you mean by input injection? Explain different ways of doing it.
+Q15. Define API testing with Runscope.
+Q16. Explain the major challenges that come while API testing.
+Q17. What are the main principles of API test design?
+Q18. Explain the types of bugs that can be found using API testing?
+Q19. Name various tools used for API test automation.
+Q20. What is the API documentation?
+Q21. List some templates for API documentation that are most used.
+Q22. Explain the difference between API testing and Unit Testing.
+Q23. Define TestApi?
+Q24. Explain everything about warnings and API errors.
+Q25. Explain the working of API Builder.
+Basic API Interview Questions
+Q.1 What are the benefits of API testing?
+Q.2 What are the challenges faced in API testing?
+Q.3 Explain how to document each function in the API document? 
+Q.4 What are the tools used for API documentation?
+Q.5 What’s the difference between API and Web Service?
+Q.6 What are the architectural styles used for creating a Web API?
+Q.7 How to perform API testing?
+Q.8 Why is API testing the most preferred for Automation testing?
+Q.9 Name a few API documentation templates?
+Q.10 What to be considered to create great API documentation?
+Q.11 What are the differences between SOAP and REST API?
+Q.13 What are the main components of an HTTP request?
+Q.14 Which HTTP protocols are supported by REST?
+Q.15 What is URI? What is the purpose of a web-based service, and what is its format?
+Q.16 Define the caching mechanism.
+Q.17 What’s the difference between PUT and POST operations in Rest API?
+Q.18 Can we use GET requests instead of PUT to create a resource?
+Q.19 What are the commonly used HTTP methods for RESTful services?
+Q.20 What is Payload in REST API?
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 

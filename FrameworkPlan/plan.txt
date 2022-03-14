@@ -1,0 +1,32 @@
+Rest API Automation Framework from Scratch
+1.Create Maven Project with Cucumber and Rest Assured Dependencies
+2.Define Project Structure with Cucumber Framework Setup
+3.Create Feature File with the Test case you want to Automate
+4.Implement Step Defination- files with supported code
+5.Build Utils File to define all reusable request and response specifications
+6.Build POJO classes for Serializing and Deserializing Json Payload
+7.Implement logging into Framework to log request and response details
+8.Develop End to End Functionality Test with all validations and Assertions
+9.Define Global Properties and drive all the global variables from Properties
+10.Define Enum class with constants to centralize all resources details
+11.Implement Data Driven Machanism to drive data dynamically fromn feature files
+12.Implement Parameterization to run tests with multiple data sets using cucumber example Keyword
+13.Add more tests and implement Tagging Machanism to run selected Tests from test Runner files
+14.Implement Pre and Postcondition for tests with Cucumber Hooks
+15.Execute Complete Framework from Maven commands
+16.Implement Maven driven global values into Test for dynamic execution
+17.Generate Reports for Test Execution results
+18.Integrate the Framework into Jenkin CI/CD TOOL
+19.Implement Parameterized Jenkin job to choose the global values at run time
+(i)mvn test -Dcucumber.options="--tags @TagName"
+(ii)mvn test verify
+
+
+
+C:\Users\miraa\STS4Project\BddCucumberRestNote\src\test\resources\AllFeatures
+
+src/test/resources/AllFeatures--->run all feature files 
+
+C:\Users\miraa\STS4Project\BddCucumberRestNote\src\test\resources\AllFeatures\PassResourcesDynamically3.feature
+
+src/test/resources/AllFeatures/PassResourcesDynamically3.feature -->Run only PassResourcesDynamically3.feature file
