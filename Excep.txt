@@ -1,0 +1,72 @@
+How to avoid “StaleElementReferenceException” in Selenium?
+How To Handle Stale Element Exception in Selenium(With Code)?
+
+Solution 1: Refreshing the web page
+
+You could refresh the page and try again for the same element.
+
+Assume you are trying to click on a link and getting the stale element exception.
+
+Sample code to overcome the issue
+
+driver.navigate().refersh();
+driver.findElement(By.xpath("xpath here")).click();
+
+Solution 2: Using Try Catch Block
+If an element is not attached to DOM then you could try using ‘try-catch block’ within ‘for loop’
+
+// Using for loop, it tries for 3 times. 
+// If the element is located for the first time then it breaks from the for loop nad comeout of the loop
+for(int i=0; i<=2;i++){
+  try{
+     driver.findElement(By.xpath("xpath here")).click();
+     break;
+  }
+  catch(Exception e){
+     Sysout(e.getMessage());
+  }
+}
+
+Solution 3: Using ExpectedConditions.refreshed
+Wait for the element till it gets available
+
+wait.until(ExpectedConditions.presenceOfElementLocated(By.id("table")));
+
+Use ExpectedConditions.refreshed to avoid StaleElementReferenceException 
+and retrieve the element again. This method updates the element by redrawing 
+it and we can access the referenced element.
+
+wait.until(ExpectedConditions.refreshed(ExpectedConditions.stalenessOf("table")));
+
+Solution 4: Using POM
+We can handle Stale Element Reference Exception by using POM.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
